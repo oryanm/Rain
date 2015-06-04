@@ -5,7 +5,6 @@ import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -64,11 +63,10 @@ public class Menu extends ScreenAdapter {
 
         rain.batch.setProjectionMatrix(camera.combined);
         rain.batch.begin();
-        String paused = "Paused";
-        BitmapFont.TextBounds bounds = rain.font74.getBounds(paused);
-        float x = Gdx.graphics.getWidth() / 2 - bounds.width / 2;
-        float y = Gdx.graphics.getHeight() / 2 - bounds.height / 2;
-        rain.font74.draw(rain.batch, paused, x, y * 1.5f);
+        rain.layout74.setText(rain.font74, "Paused");
+        float x = Gdx.graphics.getWidth() / 2 - rain.layout74.width / 2;
+        float y = Gdx.graphics.getHeight() / 2 - rain.layout74.height / 2;
+        rain.font74.draw(rain.batch, rain.layout74, x, y * 1.5f);
         rain.batch.end();
 
         stage.act(delta);

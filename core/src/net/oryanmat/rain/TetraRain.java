@@ -5,14 +5,13 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 
 public class TetraRain extends Game{
     public static final int COLUMNS = 10;
@@ -44,7 +43,7 @@ public class TetraRain extends Game{
 
     BitmapFont font74;
     BitmapFont font1;
-    BitmapFont.TextBounds bounds;
+    GlyphLayout layout74 = new GlyphLayout();
 
     @Override
     public void create() {
@@ -85,7 +84,8 @@ public class TetraRain extends Game{
         parameter.characters = "PausedLINES:1234567890";
         font74 = generator.generateFont(parameter);
         font74.setColor(halfGrey);
-        bounds = font74.getBounds(String.format(SCORE_FORMAT, 0));
+
+        layout74.setText(font74, String.format(SCORE_FORMAT, 0));
 
         parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
         parameter.size = (int) (BLOCK_SIZE * 1.1);

@@ -70,10 +70,10 @@ public class GameScreen extends ScreenAdapter {
     }
 
     private void renderText() {
-        String scoreText = String.format(SCORE_FORMAT, score);
-        float x = Gdx.graphics.getWidth() / 2 - rain.bounds.width / 2;
-        float y = Gdx.graphics.getHeight() / 2 - rain.bounds.height / 2;
-        rain.font74.draw(rain.batch, scoreText, x, y + 8 * BLOCK_SIZE);
+        rain.layout74.setText(rain.font74, String.format(SCORE_FORMAT, score));
+        float x = Gdx.graphics.getWidth() / 2 - rain.layout74.width / 2;
+        float y = Gdx.graphics.getHeight() / 2 - rain.layout74.height / 2;
+        rain.font74.draw(rain.batch, rain.layout74, x, y + 8 * BLOCK_SIZE);
 
         String linesText = String.format(LINES_FORMAT, lines);
         rain.font1.draw(rain.batch, linesText, x, y + 9 * BLOCK_SIZE);

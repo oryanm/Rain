@@ -4,8 +4,8 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'de.richsource.gradle.plugins:gwt-gradle-plugin:0.5'
-        classpath 'com.android.tools.build:gradle:0.14.2'
+        classpath 'de.richsource.gradle.plugins:gwt-gradle-plugin:0.6'
+        classpath 'com.android.tools.build:gradle:1.2.3'
     }
 }
 
@@ -16,8 +16,8 @@ allprojects {
     version = '1.0'
     ext {
         appName = 'Rain'
-        gdxVersion = '1.3.1'
-        roboVMVersion = '0.0.14'
+        gdxVersion = '1.6.1'
+        roboVMVersion = '1.2.0'
     }
 
     repositories {
