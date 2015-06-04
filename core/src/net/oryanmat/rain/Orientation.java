@@ -5,7 +5,7 @@ import com.badlogic.gdx.utils.ObjectMap;
 public interface Orientation {
     boolean apply(int column, int row);
 
-    public static final Orientation S_HORIZONTAL = new Orientation() {
+    Orientation S_HORIZONTAL = new Orientation() {
         @Override
         public boolean apply(int column, int row) {
             return column == 2 && row == 2 ||
@@ -15,7 +15,7 @@ public interface Orientation {
         }
     };
 
-    public static final Orientation S_VERTICAL = new Orientation() {
+    Orientation S_VERTICAL = new Orientation() {
         @Override
         public boolean apply(int column, int row) {
             return column == 2 && row == 2 ||
@@ -25,7 +25,7 @@ public interface Orientation {
         }
     };
 
-    public static final Orientation Z_HORIZONTAL = new Orientation() {
+    Orientation Z_HORIZONTAL = new Orientation() {
         @Override
         public boolean apply(int column, int row) {
             return column == 2 && row == 2 ||
@@ -35,7 +35,7 @@ public interface Orientation {
         }
     };
 
-    public static final Orientation Z_VERTICAL = new Orientation() {
+    Orientation Z_VERTICAL = new Orientation() {
         @Override
         public boolean apply(int column, int row) {
             return column == 2 && row == 2 ||
@@ -45,7 +45,7 @@ public interface Orientation {
         }
     };
 
-    public static final Orientation L_RIGHT = new Orientation() {
+    Orientation L_RIGHT = new Orientation() {
         @Override
         public boolean apply(int column, int row) {
             return column == 2 && row == 2 ||
@@ -55,7 +55,7 @@ public interface Orientation {
         }
     };
 
-    public static final Orientation L_DOWN = new Orientation() {
+    Orientation L_DOWN = new Orientation() {
         @Override
         public boolean apply(int column, int row) {
             return column == 2 && row == 2 ||
@@ -65,7 +65,7 @@ public interface Orientation {
         }
     };
 
-    public static final Orientation L_LEFT = new Orientation() {
+    Orientation L_LEFT = new Orientation() {
         @Override
         public boolean apply(int column, int row) {
             return column == 2 && row == 2 ||
@@ -75,7 +75,7 @@ public interface Orientation {
         }
     };
 
-    public static final Orientation L_UP = new Orientation() {
+    Orientation L_UP = new Orientation() {
         @Override
         public boolean apply(int column, int row) {
             return column == 2 && row == 2 ||
@@ -85,7 +85,7 @@ public interface Orientation {
         }
     };
 
-    public static final Orientation J_DOWN = new Orientation() {
+    Orientation J_DOWN = new Orientation() {
         @Override
         public boolean apply(int column, int row) {
             return column == 2 && row == 2 ||
@@ -95,7 +95,7 @@ public interface Orientation {
         }
     };
 
-    public static final Orientation J_LEFT = new Orientation() {
+    Orientation J_LEFT = new Orientation() {
         @Override
         public boolean apply(int column, int row) {
             return column == 2 && row == 3 ||
@@ -105,7 +105,7 @@ public interface Orientation {
         }
     };
 
-    public static final Orientation J_UP = new Orientation() {
+    Orientation J_UP = new Orientation() {
         @Override
         public boolean apply(int column, int row) {
             return column == 1 && row == 3 ||
@@ -115,7 +115,7 @@ public interface Orientation {
         }
     };
 
-    public static final Orientation J_RIGHT = new Orientation() {
+    Orientation J_RIGHT = new Orientation() {
         @Override
         public boolean apply(int column, int row) {
             return column == 2 && row == 1 ||
@@ -125,7 +125,7 @@ public interface Orientation {
         }
     };
 
-    public static final Orientation T_DOWN = new Orientation() {
+    Orientation T_DOWN = new Orientation() {
         @Override
         public boolean apply(int column, int row) {
             return column == 2 && row == 2 ||
@@ -135,7 +135,7 @@ public interface Orientation {
         }
     };
 
-    public static final Orientation T_LEFT = new Orientation() {
+    Orientation T_LEFT = new Orientation() {
         @Override
         public boolean apply(int column, int row) {
             return column == 2 && row == 1 ||
@@ -145,7 +145,7 @@ public interface Orientation {
         }
     };
 
-    public static final Orientation T_UP = new Orientation() {
+    Orientation T_UP = new Orientation() {
         @Override
         public boolean apply(int column, int row) {
             return column == 1 && row == 2 ||
@@ -155,7 +155,7 @@ public interface Orientation {
         }
     };
 
-    public static final Orientation T_RIGHT = new Orientation() {
+    Orientation T_RIGHT = new Orientation() {
         @Override
         public boolean apply(int column, int row) {
             return column == 2 && row == 1 ||
@@ -165,7 +165,7 @@ public interface Orientation {
         }
     };
 
-    public static final Orientation I_HORIZONTAL = new Orientation() {
+    Orientation I_HORIZONTAL = new Orientation() {
         @Override
         public boolean apply(int column, int row) {
             return column == 0 && row == 2 ||
@@ -175,7 +175,7 @@ public interface Orientation {
         }
     };
 
-    public static final Orientation I_VERTICAL = new Orientation() {
+    Orientation I_VERTICAL = new Orientation() {
         @Override
         public boolean apply(int column, int row) {
             return column == 2 && row == 1 ||
@@ -185,7 +185,7 @@ public interface Orientation {
         }
     };
 
-    public static final Orientation O = new Orientation() {
+    Orientation O = new Orientation() {
         @Override
         public boolean apply(int column, int row) {
             return column == 1 && row == 1 ||
@@ -195,14 +195,14 @@ public interface Orientation {
         }
     };
 
-    public static final Orientation NULL = new Orientation() {
+    Orientation NULL = new Orientation() {
         @Override
         public boolean apply(int column, int row) {
             return false;
         }
     };
 
-    public static final ObjectMap<Orientation, Orientation> ROTATION = new ObjectMap<Orientation, Orientation>() {{
+    ObjectMap<Orientation, Orientation> ROTATION = new ObjectMap<Orientation, Orientation>() {{
         put(S_HORIZONTAL, S_VERTICAL);
         put(S_VERTICAL, S_HORIZONTAL);
 
