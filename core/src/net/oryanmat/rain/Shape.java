@@ -10,7 +10,11 @@ import static net.oryanmat.rain.Orientation.*;
 
 public class Shape {
     public static Shape spawn() {
-        return new Shape(getRandom(), 4, 17, getColor());
+        return new Shape(getRandom(), 4, 17, Colors.getColor(1));
+    }
+
+    public static Shape spawn(int level) {
+        return new Shape(getRandom(), 4, 17, Colors.getColor(level));
     }
 
     public static Shape empty() {
@@ -36,19 +40,6 @@ public class Shape {
                 return S_HORIZONTAL;
         }
     }
-
-    public static Color getColor() {
-        switch (MathUtils.random(0, 2)) {
-            default:
-            case 0:
-                return new Color(0xCC0000FF);
-            case 1:
-                return new Color(0x0099CCFF);
-            case 2:
-                return new Color(0x669900FF);
-        }
-    }
-
 
     Orientation orientation;
     int column = 0;

@@ -132,7 +132,9 @@ public class GameScreen extends ScreenAdapter {
     }
 
     private void update() {
-        if (TimeUtils.nanoTime() - lastDropTime > 1000000000 * getSpeed((int) Math.ceil(lines / 10 + 1))) {
+        int level = getLevel();
+
+        if (TimeUtils.nanoTime() - lastDropTime > 1000000000 * getSpeed(level)) {
             if (shape.isBlocked(board)) {
                 board.setInBoard(shape);
                 int fullRows = board.checkForFullRow();
@@ -140,7 +142,7 @@ public class GameScreen extends ScreenAdapter {
                 score += getScore(fullRows);
                 Sounds.play(fullRows > 0 ? Sounds.CLEAR_WAV : Sounds.DROP_WAV);
                 shape = nextShape;
-                nextShape = Shape.spawn();
+                nextShape = Shape.spawn(level);
                 backupUsed = false;
             } else {
                 shape.drop();
@@ -148,6 +150,10 @@ public class GameScreen extends ScreenAdapter {
 
             lastDropTime = TimeUtils.nanoTime();
         }
+    }
+
+    private int getLevel() {
+        return (int) Math.ceil(lines / 10 + 1);
     }
 
     public int getScore(int rows) {
@@ -331,7 +337,7 @@ public class GameScreen extends ScreenAdapter {
         if (!backupShape.isEmpty()) {
             temp = backupShape;
         } else {
-            nextShape = Shape.spawn();
+            nextShape = Shape.spawn(getLevel());
         }
 
         backupShape = shape;
