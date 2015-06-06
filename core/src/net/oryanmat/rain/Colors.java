@@ -54,7 +54,8 @@ public class Colors {
      * secondary shade is randomly selected out of 3
      */
     public static Color getColor(int level) {
-        PrimaryColors primary = PrimaryColors.values()[((level - 1) % (PrimaryColors.values().length / 2))];
+        PrimaryColors[] values = PrimaryColors.values();
+        PrimaryColors primary = values[(level - 1) % values.length];
         int random = MathUtils.random(0, 2);
 
         return COLORS.get(primary).get(random);
