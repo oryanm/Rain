@@ -83,7 +83,7 @@ default-rect-down
   index: -1
 default-round
   rotate: false
-  xy: 112, 29
+  xy: 112, 0
   size: 12, 20
   split: 5, 5, 5, 4
   pad: 4, 4, 1, 1
@@ -92,7 +92,7 @@ default-round
   index: -1
 default-round-down
   rotate: false
-  xy: 99, 29
+  xy: 99, 0
   size: 12, 20
   split: 5, 5, 5, 4
   pad: 4, 4, 1, 1
