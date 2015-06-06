@@ -152,6 +152,19 @@ public class GameScreen extends ScreenAdapter {
         }
     }
 
+    public void reset() {
+        lastDropTime = TimeUtils.nanoTime();
+        pinched = false;
+        backupUsed = false;
+        lines = 0;
+        score = 0;
+
+        board = new Board();
+        shape = Shape.spawn();
+        nextShape = Shape.spawn();
+        backupShape = Shape.empty();
+    }
+
     private int getLevel() {
         return (int) Math.ceil(lines / 10 + 1);
     }

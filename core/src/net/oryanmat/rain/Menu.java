@@ -7,6 +7,8 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.input.GestureDetector;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Slider;
@@ -37,6 +39,8 @@ public class Menu extends ScreenAdapter {
         Gdx.input.setInputProcessor(multiplexer);
 
         Button restartButton = new TextButton("Restart", rain.skin);
+        restartButton.addListener(getResetListener());
+
         Slider sfxSlider = new Slider(0, 1, 0.05f, false, rain.skin);
 
         Table table = new Table(rain.skin);
@@ -92,17 +96,35 @@ public class Menu extends ScreenAdapter {
         Gdx.gl.glDisable(GL20.GL_BLEND);
     }
 
+    private InputListener getResetListener() {
+        return new InputListener() {
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                gameScreen.reset();
+            }
+
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                return closeScreen();
+            }
+        };
+    }
+
     class Gesture extends GestureDetector.GestureAdapter {
         @Override
         public boolean fling(float velocityX, float velocityY, int button) {
             if (velocityY < -FLING_SPEED) {
-                Menu.this.rain.setScreen(gameScreen);
-                dispose();
-                return true;
+                return closeScreen();
             }
 
             return super.fling(velocityX, velocityY, button);
         }
+    }
+
+    private boolean closeScreen() {
+        Menu.this.rain.setScreen(gameScreen);
+        dispose();
+        return true;
     }
 
     @Override
