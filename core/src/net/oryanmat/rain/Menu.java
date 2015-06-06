@@ -44,7 +44,6 @@ public class Menu extends ScreenAdapter {
         Slider sfxSlider = new Slider(0, 1, 0.05f, false, rain.skin);
 
         Table table = new Table(rain.skin);
-        table.debug();
         table.setFillParent(true);
         table.defaults().height(BLOCK_SIZE * 2).expandX().pad(BLOCK_SIZE * 0.5f).fill();
         table.add(restartButton).colspan(2);
@@ -98,19 +97,22 @@ public class Menu extends ScreenAdapter {
 
     private InputListener getResetListener() {
         return new InputListener() {
+            // todo: don't reset when player moved finger away from button
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 gameScreen.reset();
+                closeScreen();
             }
 
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                return closeScreen();
+                return true;
             }
         };
     }
 
     class Gesture extends GestureDetector.GestureAdapter {
+        // todo: ignore buttons
         @Override
         public boolean fling(float velocityX, float velocityY, int button) {
             if (velocityY < -FLING_SPEED) {
