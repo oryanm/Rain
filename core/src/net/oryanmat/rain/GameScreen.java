@@ -19,8 +19,7 @@ public class GameScreen extends ScreenAdapter {
     long lastDropTime = TimeUtils.nanoTime();
     boolean pinched = false;
     boolean backupUsed = false;
-    int lines = 0;
-    int score = 0;
+    GameStats stats = new GameStats(0, 0);
 
     Board board = new Board();
     Shape shape = Shape.spawn();
@@ -70,12 +69,12 @@ public class GameScreen extends ScreenAdapter {
     }
 
     private void renderText() {
-        rain.layout74.setText(rain.font74, String.format(SCORE_FORMAT, score));
+        rain.layout74.setText(rain.font74, String.format(SCORE_FORMAT, stats.score));
         float x = Gdx.graphics.getWidth() / 2 - rain.layout74.width / 2;
         float y = Gdx.graphics.getHeight() / 2 - rain.layout74.height / 2;
         rain.font74.draw(rain.batch, rain.layout74, x, y + 8 * BLOCK_SIZE);
 
-        String linesText = String.format(LINES_FORMAT, lines);
+        String linesText = String.format(LINES_FORMAT, stats.rows);
         rain.font1.draw(rain.batch, linesText, x, y + 9 * BLOCK_SIZE);
     }
 
@@ -132,17 +131,14 @@ public class GameScreen extends ScreenAdapter {
     }
 
     private void update() {
-        int level = getLevel();
-
-        if (TimeUtils.nanoTime() - lastDropTime > 1000000000 * getSpeed(level)) {
+        if (TimeUtils.nanoTime() - lastDropTime > 1000000000 * stats.getSpeed()) {
             if (shape.isBlocked(board)) {
                 board.setInBoard(shape);
                 int fullRows = board.checkForFullRow();
-                lines += fullRows;
-                score += getScore(fullRows);
+                stats.update(fullRows);
                 Sounds.play(fullRows > 0 ? Sounds.CLEAR_WAV : Sounds.DROP_WAV);
                 shape = nextShape;
-                nextShape = Shape.spawn(level);
+                nextShape = Shape.spawn(stats.getLevel());
                 backupUsed = false;
             } else {
                 shape.drop();
@@ -156,66 +152,12 @@ public class GameScreen extends ScreenAdapter {
         lastDropTime = TimeUtils.nanoTime();
         pinched = false;
         backupUsed = false;
-        lines = 0;
-        score = 0;
+        stats = new GameStats(0, 0);
 
         board = new Board();
         shape = Shape.spawn();
         nextShape = Shape.spawn();
         backupShape = Shape.empty();
-    }
-
-    private int getLevel() {
-        return (int) Math.ceil(lines / 10 + 1);
-    }
-
-    public int getScore(int rows) {
-        switch (rows) {
-            default:
-                return 0;
-            case 1:
-                return 40;
-            case 2:
-                return 100;
-            case 3:
-                return 300;
-            case 4:
-                return 1200;
-        }
-    }
-
-    public double getSpeed(int level) {
-        switch (level) {
-            case 1:
-                return 0.799;
-            case 2:
-                return 0.715;
-            case 3:
-                return 0.632;
-            case 4:
-                return 0.549;
-            case 5:
-                return 0.466;
-            case 6:
-                return 0.383;
-            case 7:
-                return 0.300;
-            case 8:
-                return 0.216;
-            case 9:
-                return 0.133;
-            case 10:
-                return 0.100;
-            case 11:
-            case 12:
-            case 13:
-                return 0.083;
-            case 14:
-            case 15:
-            case 16:
-            default:
-                return 0.067;
-        }
     }
 
     @Override
@@ -350,7 +292,7 @@ public class GameScreen extends ScreenAdapter {
         if (!backupShape.isEmpty()) {
             temp = backupShape;
         } else {
-            nextShape = Shape.spawn(getLevel());
+            nextShape = Shape.spawn(stats.getLevel());
         }
 
         backupShape = shape;
@@ -364,7 +306,7 @@ public class GameScreen extends ScreenAdapter {
     void dropUntilBlocked() {
         while (!shape.isBlocked(board)) {
             shape.drop();
-            score += 1;
+            stats.score += 1;
         }
 
         lastDropTime = 10000000000l;
