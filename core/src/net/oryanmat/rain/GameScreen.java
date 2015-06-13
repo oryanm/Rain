@@ -133,18 +133,25 @@ public class GameScreen extends ScreenAdapter {
     private void update() {
         if (TimeUtils.nanoTime() - lastDropTime > 1000000000 * stats.getSpeed()) {
             if (shape.isBlocked(board)) {
-                board.setInBoard(shape);
-                int fullRows = board.checkForFullRow();
-                stats.update(fullRows);
-                Sounds.play(fullRows > 0 ? Sounds.CLEAR_WAV : Sounds.DROP_WAV);
-                shape = nextShape;
-                nextShape = Shape.spawn(stats.getLevel());
-                backupUsed = false;
+                setShapeInBoard();
             } else {
                 shape.drop();
             }
 
             lastDropTime = TimeUtils.nanoTime();
+        }
+    }
+
+    void setShapeInBoard() {
+        int fullRows = board.setInBoardAndCheckFullRow(shape);
+        stats.update(fullRows);
+        Sounds.play(fullRows > 0 ? Sounds.CLEAR_WAV : Sounds.DROP_WAV);
+        shape = nextShape;
+        nextShape = Shape.spawn(stats.getLevel());
+        backupUsed = false;
+
+        if (shape.isBlocked(board)) {
+            rain.setScreen(new Menu(rain, stats, true));
         }
     }
 
@@ -231,7 +238,7 @@ public class GameScreen extends ScreenAdapter {
         @Override
         public boolean fling(float velocityX, float velocityY, int button) {
             if (velocityY < -FLING_SPEED) {
-                rain.setScreen(new Menu(rain));
+                rain.setScreen(new Menu(rain, stats, false));
                 return true;
             } else if (velocityY > FLING_SPEED) {
                 dropUntilBlocked();

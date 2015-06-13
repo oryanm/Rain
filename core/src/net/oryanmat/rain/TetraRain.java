@@ -24,6 +24,8 @@ public class TetraRain extends Game{
 
     public static final String SCORE_FORMAT = "%1$06d";
     public static final String LINES_FORMAT = "LINES - %1$03d";
+    public static final String DEFAULT_FONT = "default-font";
+    public static final String BIG_FONT = "big-font";
 
     public static final Color veryLightGrey = new Color(1, 1, 1, 0.1f);
     public static final Color lightGrey = new Color(1, 1, 1, 0.3f);
@@ -81,7 +83,7 @@ public class TetraRain extends Game{
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("Roboto-Black.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
         parameter.size = (int) (BLOCK_SIZE * 1.74);
-        parameter.characters = "PausedLINES:1234567890";
+        parameter.characters = "GmOvrPausedLINES:1234567890";
         font74 = generator.generateFont(parameter);
         font74.setColor(halfGrey);
 

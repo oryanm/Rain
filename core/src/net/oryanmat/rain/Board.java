@@ -1,6 +1,7 @@
 package net.oryanmat.rain;
 
 import com.badlogic.gdx.graphics.Color;
+import sun.security.provider.SHA;
 
 import static net.oryanmat.rain.TetraRain.COLUMNS;
 import static net.oryanmat.rain.TetraRain.ROWS;
@@ -55,6 +56,11 @@ public class Board {
         }
 
         return fullRows;
+    }
+
+    int setInBoardAndCheckFullRow(Shape shape) {
+        setInBoard(shape);
+        return checkForFullRow();
     }
 
     private boolean isRowFull(int row) {

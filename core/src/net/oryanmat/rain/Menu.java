@@ -3,6 +3,7 @@ package net.oryanmat.rain;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.ScreenAdapter;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -10,10 +11,8 @@ import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
-import com.badlogic.gdx.scenes.scene2d.ui.Slider;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 import static net.oryanmat.rain.TetraRain.*;
@@ -22,11 +21,15 @@ public class Menu extends ScreenAdapter {
     TetraRain rain;
     OrthographicCamera camera;
     GameScreen gameScreen;
+    GameStats stats;
+    boolean gameOver;
 
     Stage stage;
 
-    public Menu(TetraRain rain) {
+    public Menu(TetraRain rain, GameStats stats, boolean gameOver) {
         this.rain = rain;
+        this.stats = stats;
+        this.gameOver = gameOver;
         gameScreen = (GameScreen) rain.getScreen();
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -38,20 +41,33 @@ public class Menu extends ScreenAdapter {
         multiplexer.addProcessor(stage);
         Gdx.input.setInputProcessor(multiplexer);
 
+        stage.addActor(getTable());
+    }
+
+    private Table getTable() {
         Button restartButton = new TextButton("Restart", rain.skin);
         restartButton.addListener(getResetListener());
+        restartButton.setColor(lightGrey);
 
-        Slider sfxSlider = new Slider(0, 1, 0.05f, false, rain.skin);
+        Label title = getLabel(gameOver ? "Game Over" : "Paused", BIG_FONT, lightGrey, Align.center);
 
         Table table = new Table(rain.skin);
         table.setFillParent(true);
-        table.defaults().height(BLOCK_SIZE * 2).expandX().pad(BLOCK_SIZE * 0.5f).fill();
+        table.defaults().height(BLOCK_SIZE).expandX().pad(BLOCK_SIZE * 0.5f).fill();
+        table.add(title).colspan(2).row();
+        table.add(getLabel("Lines:", DEFAULT_FONT, halfGrey, Align.right)).uniform();
+        table.add(String.valueOf(stats.rows), DEFAULT_FONT, halfGrey).uniform().row();
+        table.add(getLabel("Score:", DEFAULT_FONT, halfGrey, Align.right));
+        table.add(String.valueOf(stats.score), DEFAULT_FONT, halfGrey).row();
         table.add(restartButton).colspan(2);
-        table.row();
-        table.add("Volume:");
-        table.add(sfxSlider);
+        return table;
+    }
 
-        stage.addActor(table);
+    Label getLabel(String text, String font, Color color, int align) {
+        Label.LabelStyle titleStyle = new Label.LabelStyle(rain.skin.getFont(font), color);
+        Label title = new Label(text, titleStyle);
+        title.setAlignment(align);
+        return title;
     }
 
     @Override
@@ -63,14 +79,6 @@ public class Menu extends ScreenAdapter {
 
         renderPausedGame();
         renderShade();
-
-        rain.batch.setProjectionMatrix(camera.combined);
-        rain.batch.begin();
-        rain.layout74.setText(rain.font74, "Paused");
-        float x = Gdx.graphics.getWidth() / 2 - rain.layout74.width / 2;
-        float y = Gdx.graphics.getHeight() / 2 - rain.layout74.height / 2;
-        rain.font74.draw(rain.batch, rain.layout74, x, y * 1.5f);
-        rain.batch.end();
 
         stage.act(delta);
         stage.draw();
@@ -115,7 +123,7 @@ public class Menu extends ScreenAdapter {
         // todo: ignore buttons
         @Override
         public boolean fling(float velocityX, float velocityY, int button) {
-            if (velocityY < -FLING_SPEED) {
+            if (!gameOver && velocityY < -FLING_SPEED) {
                 return closeScreen();
             }
 
