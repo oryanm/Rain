@@ -3,25 +3,24 @@ package net.oryanmat.rain;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.MathUtils;
 
-
+import static net.oryanmat.rain.Orientation.*;
 import static net.oryanmat.rain.TetraRain.COLUMNS;
 import static net.oryanmat.rain.TetraRain.SHAPE_SIZE;
-import static net.oryanmat.rain.Orientation.*;
 
 public class Shape {
-    public static Shape spawn() {
+    static Shape spawn() {
         return new Shape(getRandom(), 4, 17, Colors.getColor(1));
     }
 
-    public static Shape spawn(int level) {
+    static Shape spawn(int level) {
         return new Shape(getRandom(), 4, 17, Colors.getColor(level));
     }
 
-    public static Shape empty() {
+    static Shape empty() {
         return new Shape(Orientation.NULL, 0, 0, Color.CLEAR);
     }
 
-    public static Orientation getRandom() {
+    private static Orientation getRandom() {
         switch (MathUtils.random(0, 6)) {
             default:
             case 0:
@@ -46,7 +45,7 @@ public class Shape {
     int row = 0;
     Color color;
 
-    public Shape(Orientation orientation, int column, int row, Color color) {
+    private Shape(Orientation orientation, int column, int row, Color color) {
         this.orientation = orientation;
         this.column = column;
         this.row = row;
@@ -57,23 +56,23 @@ public class Shape {
         return orientation.apply(column, row);
     }
 
-    public void rotate() {
+    void rotate() {
         orientation = ROTATION.get(orientation);
     }
 
-    public void drop() {
+    void drop() {
         row -= 1;
     }
 
-    public void left() {
+    void left() {
         column -= 1;
     }
 
-    public void right() {
+    void right() {
         column += 1;
     }
 
-    public boolean isEmpty() {
+    boolean isEmpty() {
         return orientation.equals(Orientation.NULL);
     }
 
