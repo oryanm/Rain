@@ -2,14 +2,12 @@ package net.oryanmat.rain;
 
 import com.badlogic.gdx.graphics.Color;
 
-import static net.oryanmat.rain.TetraRain.COLUMNS;
-import static net.oryanmat.rain.TetraRain.ROWS;
-import static net.oryanmat.rain.TetraRain.SHAPE_SIZE;
+import static net.oryanmat.rain.TetraRain.*;
 
-public class Board {
-    Block[][] board = new Block[COLUMNS][ROWS + 2];
+class Board {
+    private Block[][] board = new Block[COLUMNS][ROWS + 2];
 
-    public Board() {
+    Board() {
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[i].length; j++) {
                 board[i][j] = new Block();
@@ -17,19 +15,19 @@ public class Board {
         }
     }
 
-    public boolean occupiedAt(int column, int row) {
+    boolean occupiedAt(int column, int row) {
         return !board[column][row].getEmpty();
     }
 
-    public boolean occupiedOrOutOfBounds(int column, int row) {
+    boolean occupiedOrOutOfBounds(int column, int row) {
         return column >= COLUMNS || column < 0 || row < 0 || occupiedAt(column, row);
     }
 
-    public Color colorAt(int column, int row) {
+    Color colorAt(int column, int row) {
         return board[column][row].getColor();
     }
 
-    void setInBoard(Shape shape) {
+    private void setInBoard(Shape shape) {
         for (int i = 0; i < SHAPE_SIZE; i++) {
             for (int j = 0; j < SHAPE_SIZE; j++) {
                 if (shape.occupiedAt(i, j)) {
@@ -41,7 +39,7 @@ public class Board {
         }
     }
 
-    int checkForFullRow() {
+    private int checkForFullRow() {
         int fullRows = 0;
 
         for (int j = 0; j < ROWS; j++) {
