@@ -1,7 +1,6 @@
 package net.oryanmat.rain;
 
 import com.badlogic.gdx.graphics.Color;
-import sun.security.provider.SHA;
 
 import static net.oryanmat.rain.TetraRain.COLUMNS;
 import static net.oryanmat.rain.TetraRain.ROWS;
@@ -13,13 +12,13 @@ public class Board {
     public Board() {
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[i].length; j++) {
-                board[i][j] = Block.getEmpty();
+                board[i][j] = new Block();
             }
         }
     }
 
     public boolean occupiedAt(int column, int row) {
-        return !board[column][row].empty;
+        return !board[column][row].getEmpty();
     }
 
     public boolean occupiedOrOutOfBounds(int column, int row) {
@@ -27,7 +26,7 @@ public class Board {
     }
 
     public Color colorAt(int column, int row) {
-        return board[column][row].color;
+        return board[column][row].getColor();
     }
 
     void setInBoard(Shape shape) {
@@ -35,8 +34,8 @@ public class Board {
             for (int j = 0; j < SHAPE_SIZE; j++) {
                 if (shape.occupiedAt(i, j)) {
                     Block block = board[shape.column + i][shape.row + j];
-                    block.empty = false;
-                    block.color = shape.color;
+                    block.setEmpty(false);
+                    block.setColor(shape.color);
                 }
             }
         }
@@ -75,15 +74,15 @@ public class Board {
 
     private void clearFullRow(int row) {
         for (int i = 0; i < COLUMNS; i++) {
-            board[i][row].empty = true;
+            board[i][row].setEmpty(true);
         }
     }
 
     private void dropBoard(int row) {
         for (int j = row + 1; j < ROWS; j++) {
             for (int i = 0; i < COLUMNS; i++) {
-                board[i][j - 1].empty = board[i][j].empty;
-                board[i][j - 1].color = board[i][j].color;
+                board[i][j - 1].setEmpty(board[i][j].getEmpty());
+                board[i][j - 1].setColor(board[i][j].getColor());
             }
         }
     }
