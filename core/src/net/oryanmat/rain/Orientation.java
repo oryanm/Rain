@@ -2,205 +2,106 @@ package net.oryanmat.rain;
 
 import com.badlogic.gdx.utils.ObjectMap;
 
+@FunctionalInterface
 public interface Orientation {
     boolean apply(int column, int row);
 
-    Orientation S_HORIZONTAL = new Orientation() {
-        @Override
-        public boolean apply(int column, int row) {
-            return column == 2 && row == 2 ||
-                    column == 3 && row == 2 ||
-                    column == 2 && row == 1 ||
-                    column == 1 && row == 1;
-        }
-    };
+    Orientation S_HORIZONTAL = (column, row) -> column == 2 && row == 2 ||
+            column == 3 && row == 2 ||
+            column == 2 && row == 1 ||
+            column == 1 && row == 1;
 
-    Orientation S_VERTICAL = new Orientation() {
-        @Override
-        public boolean apply(int column, int row) {
-            return column == 2 && row == 2 ||
-                    column == 2 && row == 3 ||
-                    column == 3 && row == 1 ||
-                    column == 3 && row == 2;
-        }
-    };
+    Orientation S_VERTICAL = (column, row) -> column == 2 && row == 2 ||
+            column == 2 && row == 3 ||
+            column == 3 && row == 1 ||
+            column == 3 && row == 2;
 
-    Orientation Z_HORIZONTAL = new Orientation() {
-        @Override
-        public boolean apply(int column, int row) {
-            return column == 2 && row == 2 ||
-                    column == 1 && row == 2 ||
-                    column == 2 && row == 1 ||
-                    column == 3 && row == 1;
-        }
-    };
+    Orientation Z_HORIZONTAL = (column, row) -> column == 2 && row == 2 ||
+            column == 1 && row == 2 ||
+            column == 2 && row == 1 ||
+            column == 3 && row == 1;
 
-    Orientation Z_VERTICAL = new Orientation() {
-        @Override
-        public boolean apply(int column, int row) {
-            return column == 2 && row == 2 ||
-                    column == 3 && row == 2 ||
-                    column == 2 && row == 1 ||
-                    column == 3 && row == 3;
-        }
-    };
+    Orientation Z_VERTICAL = (column, row) -> column == 2 && row == 2 ||
+            column == 3 && row == 2 ||
+            column == 2 && row == 1 ||
+            column == 3 && row == 3;
 
-    Orientation L_RIGHT = new Orientation() {
-        @Override
-        public boolean apply(int column, int row) {
-            return column == 2 && row == 2 ||
-                    column == 2 && row == 1 ||
-                    column == 2 && row == 3 ||
-                    column == 3 && row == 1;
-        }
-    };
+    Orientation L_RIGHT = (column, row) -> column == 2 && row == 2 ||
+            column == 2 && row == 1 ||
+            column == 2 && row == 3 ||
+            column == 3 && row == 1;
 
-    Orientation L_DOWN = new Orientation() {
-        @Override
-        public boolean apply(int column, int row) {
-            return column == 2 && row == 2 ||
-                    column == 1 && row == 2 ||
-                    column == 3 && row == 2 ||
-                    column == 1 && row == 1;
-        }
-    };
+    Orientation L_DOWN = (column, row) -> column == 2 && row == 2 ||
+            column == 1 && row == 2 ||
+            column == 3 && row == 2 ||
+            column == 1 && row == 1;
 
-    Orientation L_LEFT = new Orientation() {
-        @Override
-        public boolean apply(int column, int row) {
-            return column == 2 && row == 2 ||
-                    column == 2 && row == 1 ||
-                    column == 2 && row == 3 ||
-                    column == 1 && row == 3;
-        }
-    };
+    Orientation L_LEFT = (column, row) -> column == 2 && row == 2 ||
+            column == 2 && row == 1 ||
+            column == 2 && row == 3 ||
+            column == 1 && row == 3;
 
-    Orientation L_UP = new Orientation() {
-        @Override
-        public boolean apply(int column, int row) {
-            return column == 2 && row == 2 ||
-                    column == 1 && row == 2 ||
-                    column == 3 && row == 2 ||
-                    column == 3 && row == 3;
-        }
-    };
+    Orientation L_UP = (column, row) -> column == 2 && row == 2 ||
+            column == 1 && row == 2 ||
+            column == 3 && row == 2 ||
+            column == 3 && row == 3;
 
-    Orientation J_DOWN = new Orientation() {
-        @Override
-        public boolean apply(int column, int row) {
-            return column == 2 && row == 2 ||
-                    column == 1 && row == 2 ||
-                    column == 3 && row == 2 ||
-                    column == 3 && row == 1;
-        }
-    };
+    Orientation J_DOWN = (column, row) -> column == 2 && row == 2 ||
+            column == 1 && row == 2 ||
+            column == 3 && row == 2 ||
+            column == 3 && row == 1;
 
-    Orientation J_LEFT = new Orientation() {
-        @Override
-        public boolean apply(int column, int row) {
-            return column == 2 && row == 3 ||
-                    column == 2 && row == 2 ||
-                    column == 2 && row == 1 ||
-                    column == 1 && row == 1;
-        }
-    };
+    Orientation J_LEFT = (column, row) -> column == 2 && row == 3 ||
+            column == 2 && row == 2 ||
+            column == 2 && row == 1 ||
+            column == 1 && row == 1;
 
-    Orientation J_UP = new Orientation() {
-        @Override
-        public boolean apply(int column, int row) {
-            return column == 1 && row == 3 ||
-                    column == 1 && row == 2 ||
-                    column == 2 && row == 2 ||
-                    column == 3 && row == 2;
-        }
-    };
+    Orientation J_UP = (column, row) -> column == 1 && row == 3 ||
+            column == 1 && row == 2 ||
+            column == 2 && row == 2 ||
+            column == 3 && row == 2;
 
-    Orientation J_RIGHT = new Orientation() {
-        @Override
-        public boolean apply(int column, int row) {
-            return column == 2 && row == 1 ||
-                    column == 2 && row == 2 ||
-                    column == 2 && row == 3 ||
-                    column == 3 && row == 3;
-        }
-    };
+    Orientation J_RIGHT = (column, row) -> column == 2 && row == 1 ||
+            column == 2 && row == 2 ||
+            column == 2 && row == 3 ||
+            column == 3 && row == 3;
 
-    Orientation T_DOWN = new Orientation() {
-        @Override
-        public boolean apply(int column, int row) {
-            return column == 2 && row == 2 ||
-                    column == 1 && row == 2 ||
-                    column == 3 && row == 2 ||
-                    column == 2 && row == 1;
-        }
-    };
+    Orientation T_DOWN = (column, row) -> column == 2 && row == 2 ||
+            column == 1 && row == 2 ||
+            column == 3 && row == 2 ||
+            column == 2 && row == 1;
 
-    Orientation T_LEFT = new Orientation() {
-        @Override
-        public boolean apply(int column, int row) {
-            return column == 2 && row == 1 ||
-                    column == 2 && row == 2 ||
-                    column == 2 && row == 3 ||
-                    column == 1 && row == 2;
-        }
-    };
+    Orientation T_LEFT = (column, row) -> column == 2 && row == 1 ||
+            column == 2 && row == 2 ||
+            column == 2 && row == 3 ||
+            column == 1 && row == 2;
 
-    Orientation T_UP = new Orientation() {
-        @Override
-        public boolean apply(int column, int row) {
-            return column == 1 && row == 2 ||
-                    column == 2 && row == 2 ||
-                    column == 2 && row == 3 ||
-                    column == 3 && row == 2;
-        }
-    };
+    Orientation T_UP = (column, row) -> column == 1 && row == 2 ||
+            column == 2 && row == 2 ||
+            column == 2 && row == 3 ||
+            column == 3 && row == 2;
 
-    Orientation T_RIGHT = new Orientation() {
-        @Override
-        public boolean apply(int column, int row) {
-            return column == 2 && row == 1 ||
-                    column == 2 && row == 2 ||
-                    column == 2 && row == 3 ||
-                    column == 3 && row == 2;
-        }
-    };
+    Orientation T_RIGHT = (column, row) -> column == 2 && row == 1 ||
+            column == 2 && row == 2 ||
+            column == 2 && row == 3 ||
+            column == 3 && row == 2;
 
-    Orientation I_HORIZONTAL = new Orientation() {
-        @Override
-        public boolean apply(int column, int row) {
-            return column == 0 && row == 2 ||
-                    column == 1 && row == 2 ||
-                    column == 2 && row == 2 ||
-                    column == 3 && row == 2;
-        }
-    };
+    Orientation I_HORIZONTAL = (column, row) -> column == 0 && row == 2 ||
+            column == 1 && row == 2 ||
+            column == 2 && row == 2 ||
+            column == 3 && row == 2;
 
-    Orientation I_VERTICAL = new Orientation() {
-        @Override
-        public boolean apply(int column, int row) {
-            return column == 2 && row == 1 ||
-                    column == 2 && row == 2 ||
-                    column == 2 && row == 3 ||
-                    column == 2 && row == 4;
-        }
-    };
+    Orientation I_VERTICAL = (column, row) -> column == 2 && row == 1 ||
+            column == 2 && row == 2 ||
+            column == 2 && row == 3 ||
+            column == 2 && row == 4;
 
-    Orientation O = new Orientation() {
-        @Override
-        public boolean apply(int column, int row) {
-            return column == 1 && row == 1 ||
-                    column == 1 && row == 2 ||
-                    column == 2 && row == 1 ||
-                    column == 2 && row == 2;
-        }
-    };
+    Orientation O = (column, row) -> column == 1 && row == 1 ||
+            column == 1 && row == 2 ||
+            column == 2 && row == 1 ||
+            column == 2 && row == 2;
 
-    Orientation NULL = new Orientation() {
-        @Override
-        public boolean apply(int column, int row) {
-            return false;
-        }
-    };
+    Orientation NULL = (column, row) -> false;
 
     ObjectMap<Orientation, Orientation> ROTATION = new ObjectMap<Orientation, Orientation>() {{
         put(S_HORIZONTAL, S_VERTICAL);
